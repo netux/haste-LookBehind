@@ -7,6 +7,15 @@ internal class Utils
 {
     public static InputAction AddInputAction(string actionName, InputBinding keyboardBinding, InputBinding gamepadBinding, bool force = false)
     {
+        if (GetInputBindingIdInternal(keyboardBinding) == null)
+        {
+            throw new ArgumentException("Keyboard Binding is missing an id. Id's are required for persisting binding changes!", "keyboardBinding");
+        }
+        if (GetInputBindingIdInternal(gamepadBinding) == null)
+        {
+            throw new ArgumentException("Gamepad Binding is missing an id. Id's are required for persisting binding changes!", "gamepadBinding");
+        }
+
         if (keyboardBinding.groups != null)
         {
             throw new ArgumentException("Keyboard Binding cannot have a group, as it will be overwritten", "keyboardBinding");
@@ -53,6 +62,15 @@ internal class Utils
         defaultInputActionMap.Enable();
 
         return newInputAction;
+    }
+
+    /*
+     * Get internal InputBinding ID value because the public `id` field's getter generates an id one is not already present.
+     */
+    private static string? GetInputBindingIdInternal(InputBinding inputBinding)
+    {
+        var idField = typeof(InputBinding).GetField("m_Id", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+        return (string?) idField.GetValue(inputBinding);
     }
 
     public static void AddLocalizedString(string table, string key, string localized)
