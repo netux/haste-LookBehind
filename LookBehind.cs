@@ -16,7 +16,7 @@ public class LookBehindMod
             original(self);
 
             LookBehindInputAction = Utils.AddInputAction(
-                actionName: $"{typeof(LookBehindMod).Name}--LookBehind",
+                actionName: $"{nameof(LookBehindMod)}--LookBehind",
                 keyboardBinding: new InputBinding
                 {
                     id = new Guid("1006be41-9d00-6b00-0000-000000000000"),
@@ -36,9 +36,9 @@ public class LookBehindMod
             self.AddSetting(new InputRebindSetting(LookBehindInputAction));
         };
 
-        On.CameraMovement.ApplyRotation += (original, self) =>
+        On.CameraMovement.ApplyRotation += (original, self, lookRotationEulerAngles) =>
         {
-            original(self);
+            original(self, lookRotationEulerAngles);
 
             if (LookBehindInputAction == null)
             {

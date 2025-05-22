@@ -9,21 +9,21 @@ internal class Utils
     {
         if (GetInputBindingIdInternal(keyboardBinding) == null)
         {
-            throw new ArgumentException("Keyboard Binding is missing an id. Id's are required for persisting binding changes!", "keyboardBinding");
+            throw new ArgumentException("Keyboard Binding is missing an id. Id's are required for persisting binding changes!", nameof(keyboardBinding));
         }
         if (GetInputBindingIdInternal(gamepadBinding) == null)
         {
-            throw new ArgumentException("Gamepad Binding is missing an id. Id's are required for persisting binding changes!", "gamepadBinding");
+            throw new ArgumentException("Gamepad Binding is missing an id. Id's are required for persisting binding changes!", nameof(gamepadBinding));
         }
 
         if (keyboardBinding.groups != null)
         {
-            throw new ArgumentException("Keyboard Binding cannot have a group, as it will be overwritten", "keyboardBinding");
+            throw new ArgumentException("Keyboard Binding cannot have a group, as it will be overwritten", nameof(keyboardBinding));
         }
 
         if (gamepadBinding.groups != null)
         {
-            throw new ArgumentException("Gamepad Binding cannot have a group, as it will be overwritten", "gamepadBinding");
+            throw new ArgumentException("Gamepad Binding cannot have a group, as it will be overwritten", nameof(gamepadBinding));
         }
 
         var defaultInputActionMap = Zorro.ControllerSupport.InputHandler.Instance.Default;
@@ -70,7 +70,7 @@ internal class Utils
     private static string? GetInputBindingIdInternal(InputBinding inputBinding)
     {
         var idField = typeof(InputBinding).GetField("m_Id", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
-        return (string?) idField.GetValue(inputBinding);
+        return idField?.GetValue(inputBinding) as string;
     }
 
     public static void AddLocalizedString(string table, string key, string localized)
