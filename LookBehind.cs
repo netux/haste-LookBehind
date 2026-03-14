@@ -21,13 +21,11 @@ public class LookBehindMod
                 {
                     id = new Guid("1006be41-9d00-6b00-0000-000000000000"),
                     path = "<Keyboard>/q",
-                    interactions = "hold(duration=0)"
                 },
                 gamepadBinding: new InputBinding
                 {
                     id = new Guid("1006be41-9d00-6900-0000-000000000000"),
                     path = "<GamePad>/rightStickPress",
-                    interactions = "hold(duration=0)"
                 },
                 InputActionType.Button
             );
