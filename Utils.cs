@@ -1,4 +1,5 @@
-﻿using UnityEngine.InputSystem;
+﻿using System.Collections;
+using UnityEngine.InputSystem;
 using UnityEngine.Localization.Settings;
 
 namespace HasteLookBehindMod;
@@ -32,7 +33,8 @@ internal class Utils
             throw new ArgumentException("Gamepad Binding cannot have a group, as it will be overwritten", nameof(gamepadBinding));
         }
 
-        var defaultInputActionMap = Zorro.ControllerSupport.InputHandler.Instance.Default;
+        var zorroInputHandler = Zorro.ControllerSupport.InputHandler.Instance;
+        var defaultInputActionMap = zorroInputHandler.Default;
 
         // "CaNnOt AdD, rEmOvE, oR cHaNgE eLeMeNtS oF iNpUtAcTiOnAsSeT hAsTeInPuTaCtIoNs (UnItYeNgInE.iNpUtSyStEm.InPuTaCtIoNaSsEt) WhIlE oNe Or MoRe Of ItS aCtIoNs ArE eNaBlEd"
         foreach (var actionMap in defaultInputActionMap.asset.actionMaps)
@@ -66,6 +68,10 @@ internal class Utils
             actionMap.Enable();
         }
         defaultInputActionMap.Enable();
+
+        // Repopulate some internal Unity cache values.
+        // Fix for error messages shown when using the player uses an input created through this method.
+        zorroInputHandler.PlayerInput.ActivateInput();
 
         return newInputAction;
     }
