@@ -5,7 +5,13 @@ namespace HasteLookBehindMod;
 
 internal class Utils
 {
-    public static InputAction AddInputAction(string actionName, InputBinding keyboardBinding, InputBinding gamepadBinding, bool force = false)
+    public static InputAction AddInputAction(
+        string actionName,
+        InputBinding keyboardBinding,
+        InputBinding gamepadBinding,
+        InputActionType actionType = InputActionType.Value,
+        bool force = false
+    )
     {
         if (GetInputBindingIdInternal(keyboardBinding) == null)
         {
@@ -46,7 +52,7 @@ internal class Utils
             oldInputAction.RemoveAction();
         }
 
-        var newInputAction = defaultInputActionMap.AddAction(actionName);
+        var newInputAction = defaultInputActionMap.AddAction(actionName, actionType);
 
         // Probably not the best to override this without informing the user of the method, but whatever.
         keyboardBinding.groups = ";Keyboard&Mouse";

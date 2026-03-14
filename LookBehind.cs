@@ -28,7 +28,8 @@ public class LookBehindMod
                     id = new Guid("1006be41-9d00-6900-0000-000000000000"),
                     path = "<GamePad>/rightStickPress",
                     interactions = "hold(duration=0)"
-                }
+                },
+                InputActionType.Button
             );
 
             Utils.AddLocalizedString("Settings", LookBehindInputAction.name, "Look Behind");
